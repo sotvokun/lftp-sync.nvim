@@ -77,7 +77,11 @@ FIELDS OF CONFIGURATION
   settings		[List] additional settings for the lftp. they will be
 			use for set the lftp connection for each
 			upload/download.
-			(default: {`net:max-retries 1`, `net:timeout 5`})
+			(default: {
+			  `net:max-retries 1`,
+			  `net:timeout 5`,
+			  `xfer:clobber on`
+			})
 			Example: >
 			settings:
 			  - ssl:verify-certificate no

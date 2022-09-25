@@ -48,7 +48,8 @@ M.read_config = function ()
   config_result.port = config_result.port or 21
   config_result.settings = vim.list_extend({
     'net:max-retries 1',
-    'net:timeout 10'
+    'net:timeout 10',
+    'xfer:clobber on'
   }, config_result.settings or {})
   --#endregion
   return config_result, 'ok'
