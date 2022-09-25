@@ -69,10 +69,17 @@ FIELDS OF CONFIGURATION
   remote_path		path of the target server that current folder map to.
 			Example (with `remote_path: /user/project`):
 			test.c  ->  /user/project/test.c
-  ignore		ignore the file or directory to synchronize, both
-			uploading and downloading; the item of list of string
-			end with slash ('/') means directory, otherwise file.
+  ignore		[List] ignore the file or directory to synchronize,
+			both uploading and downloading; the item of list of
+			string end with slash ('/') means directory, otherwise
+			file.
 			Note  this field has not implemented yet.
-
-
+  settings		[List] additional settings for the lftp. they will be
+			use for set the lftp connection for each
+			upload/download.
+			(default: {`net:max-retries 1`, `net:timeout 5`})
+			Example: >
+			settings:
+			  - ssl:verify-certificate no
+<
  vim:tw=78:ts=8:noet:ft=help:norl:

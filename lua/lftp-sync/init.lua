@@ -20,6 +20,18 @@ local function execute_with_notify(cmd)
   end
 end
 
+local function batch_set(list)
+  if not vim.tbl_islist(list) then
+    return {}
+  end
+  return vim.tbl_map(function (item)
+    local start, _, key, value = string.find(item, '^([^%s]+)%s+([^%s]+)$')
+    if start then
+      return lftp.set(key, value)
+    end
+  end, list)
+end
+
 local M = {}
 
 M.config_read_or_edit = function ()
@@ -40,8 +52,7 @@ M.do_all = function (type)
     utils.message(config_msg, true)
     return
   end
-  local cmd = lftp.build_cmds({
-    lftp.set('net:max-retries', 1),
+  local cmd = lftp.build_cmds(batch_set(config.settings), {
     lftp.open(config.host, config.port or 21, config.user, config.passwd, config.remote_path),
     lftp.mirror('.', '.', type == 'upload')
   })
@@ -60,8 +71,7 @@ M.do_dir = function (dir, type)
     return
   end
   local normalized_path = vim.fs.normalize(dir)
-  local cmd = lftp.build_cmds({
-    lftp.set('net:max-retries', 1),
+  local cmd = lftp.build_cmds(batch_set(config.settings), {
     lftp.open(config.host, config.port or 21, config.user, config.passwd, config.remote_path),
     lftp.mirror(normalized_path, normalized_path, type == 'upload')
   })
@@ -80,10 +90,9 @@ M.do_file = function (file, type)
     return
   end
   local normalized_path = vim.fs.normalize(file)
-  local cmd_list = {
-    lftp.set('net:max-retries', 1),
+  local cmd_list = vim.list_extend(batch_set(config.settings), {
     lftp.open(config.host, config.port or 21, config.user, config.passwd, config.remote_path)
-  }
+  })
   if type == 'upload' then
     table.insert(cmd_list, lftp.mput(normalized_path))
   elseif type == 'download' then

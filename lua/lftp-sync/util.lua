@@ -44,6 +44,13 @@ M.read_config = function ()
   if valid_result == nil then
     return nil, valid_result_msg
   end
+  --#region fill the default config
+  config_result.port = config_result.port or 21
+  config_result.settings = vim.list_extend({
+    'net:max-retries 1',
+    'net:timeout 10'
+  }, config_result.settings or {})
+  --#endregion
   return config_result, 'ok'
 end
 

@@ -49,10 +49,15 @@ M.default_setup = function ()
   }
 end
 
-M.build_cmds = function (cmds)
+M.build_cmds = function (cmds, ...)
   local lftp_cmds = {}
   if vim.tbl_islist(cmds) then
     lftp_cmds = cmds
+  end
+  for _, value in ipairs({...}) do
+    if vim.tbl_islist(value) then
+      lftp_cmds = vim.list_extend(lftp_cmds, value)
+    end
   end
   return string.format('lftp -c "%s"', table.concat(lftp_cmds, '; '))
 end
