@@ -36,6 +36,9 @@ VARIABLES						 *lftp-sync-variables*
 *g:lftp_sync_print_cmd*
 	      print lftp command while call user commands.
 	      (default value: `false`)
+*g:lftp_sync_dry_run*
+	      don't do anything, and print lftp command.
+	      (default value: `false`)
 
 ==============================================================================
 CONFIGURATION					    *lftp-sync-configurations*

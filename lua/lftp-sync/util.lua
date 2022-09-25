@@ -51,6 +51,10 @@ M.do_print_cmd = function ()
   return api.nvim_get_var('lftp_sync_print_cmd')
 end
 
+M.do_dry_run = function ()
+  return api.nvim_get_var('lftp_sync_dry_run')
+end
+
 M.is_dirpath = function (path)
   local last_char = string.sub(path, #path, #path)
   return last_char == '/' or last_char == '\\'

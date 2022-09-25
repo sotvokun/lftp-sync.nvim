@@ -5,6 +5,10 @@ local utils = require('lftp-sync.util')
 local lftp = require('lftp-sync.lftp-wrapper')
 
 local function execute_with_notify(cmd)
+  if utils.do_dry_run() then
+    utils.message(cmd)
+    return
+  end
   if utils.do_print_cmd() then
     utils.message(cmd)
   end

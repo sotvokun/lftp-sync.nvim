@@ -8,6 +8,7 @@ local lftp_sync = require('lftp-sync')
 
 api.nvim_set_var('lftp_sync_config_path', '.lftp-sync')
 api.nvim_set_var('lftp_sync_print_cmd', false)
+api.nvim_set_var('lftp_sync_dry_run', false)
 
 api.nvim_create_user_command(
   'LftpSyncConfig',
