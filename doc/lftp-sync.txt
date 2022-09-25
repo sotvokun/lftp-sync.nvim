@@ -1,0 +1,75 @@
+*lftp-sync.txt* Synchronization plugin for Neovim based on `lftp`
+
+Author: Junchen Du <sotvokun@outlook.com>
+Repo:   https://github.com/sotvokun/lftp-sync.nvim
+License:GPL-3.0-or-later
+
+==============================================================================
+INTRODUCTION
+
+lftp-sync is a synchronization plugin for Neovim based on `lftp`. lftp-sync is
+inspired from a plugin for Sublime Text - `FTPSync`.
+
+==============================================================================
+COMMANDS						  *lftp-sync-commands*
+
+*:LftpSyncConfig*
+	      open the configuration file of lftp-sync, or create it
+	      if it does not exist.
+*:LftpSyncDownloadAll*
+	      download all files from the remote path.
+*:LftpSyncUploadAll*
+	      upload all files to the remote path.
+*:LftpSyncUpload* [path]
+	      upload current buffer to the remote path, or upload
+	      the specific directory or file to the remote path.
+*:LftpSyncDownload* [path]
+	      download the file of current buffer and open it, or
+	      download the specific directory or file to the local.
+
+==============================================================================
+VARIABLES						 *lftp-sync-variables*
+
+*g:lftp_sync_config_path*
+	      the path of the lftp-sync configuration file.
+	      (default value: `.lftp-sync`)
+*g:lftp_sync_print_cmd*
+	      print lftp command while call user commands.
+	      (default value: `false`)
+
+==============================================================================
+CONFIGURATION					    *lftp-sync-configurations*
+
+The format of lftp-sync configuration file is a subset of yaml. It only
+supports the following features: 1) Comment, 2) Key-value pair, 3) List of
+strings; and no "in-line" style for all of them include comment.
+
+There is an example of lftp-sync configuration file:
+>
+ host: localhost
+ port: 21
+ user: anonymous
+ passwd:
+ remote_path: /
+ ignore:
+   - .gitignore
+   - build
+<
+FIELDS OF CONFIGURATION
+
+  host			IP or domain of the target server.
+  port			port number to communicate with the target server.
+			(default: 21)
+  user			username to login the target server.
+  passwd		password to login the target server; ignore this field
+			means login without password
+  remote_path		path of the target server that current folder map to.
+			Example (with `remote_path: /user/project`):
+			test.c  ->  /user/project/test.c
+  ignore		ignore the file or directory to synchronize, both
+			uploading and downloading; the item of list of string
+			end with slash ('/') means directory, otherwise file.
+			Note  this field has not implemented yet.
+
+
+ vim:tw=78:ts=8:noet:ft=help:norl:
